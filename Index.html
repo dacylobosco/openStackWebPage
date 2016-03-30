@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="StackApp">
+	<head><title>OpenStack App</title></head>
+	<body ng-controller="MainStack as ctrl">
+		<h1>Disparar Servidor</h1>
+		<form name="frmServer">
+			<input type="hidden"
+				name="token"
+				required
+				ng-model="ctrl.token"
+				ng-minlength="4" />
+			<br />NomeServidor:
+			<input type="text"
+				name="NomeServidor"
+				required
+				ng-model="ctrl.server.NomeServidor"
+                ng-minlength="4" />
+			<br />Flavor:
+			<select name="cmbFalvor" required ng-model="ctrl.flavor"
+						ng-options="c.name for c in ctrl.ListaFlavors">
+				<option value="">-- Selecione --</option>
+			</select>
+			<br />Image:
+			<select name="cmbImage" required ng-model="ctrl.image"
+						ng-options="c.name for c in ctrl.ListaImages">
+				<option value="">-- Selecione --</option>
+			</select>
+			<br /><br />
+			<input type="submit"
+				value="Criar Servidor"
+				ng-disabled="frmServer.$invalid" />
+		</form>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+		<script src="js/index.js"></script>
+	</body>
+</html>
