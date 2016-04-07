@@ -1,51 +1,200 @@
 <!DOCTYPE html>
 <html ng-app="StackApp">
 	<head>
-	    <style>
-        body {
-            background-color: #d0e4fe;
-        }
-
-        h1 {
-            color: orange;
-            text-align: left;
-        }
-
-        p {
-            font-family: "Times New Roman";
-            font-size: 20px;
-        }
-        </style>
-	    <title>OpenStack App</title>
+		<title>OpenStack App</title>
+		<style TYPE="text/css" >
+			<!--
+	* { margin: 100; padding: 100; }
+	body {font-family: Verdana, Arial; font-size: 12px; line-height: 18px; }
+	a { text-decoration: none; }
+	.container{margin: 20px auto; width: 900px; background: #fff;}
+	h3 { margin-bottom: 15px; font-size: 22px; text-shadow: 2px 2px 2px #ccc; }
+	
+	#frmServer {
+	
+	width: 600px;
+	padding: 20px;
+	background: #f0f0f0;
+	overflow:auto;
+	
+	border: 1px solid #cccccc;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border-radius: 7px;	
+	
+	-moz-box-shadow: 2px 2px 2px #cccccc;
+	-webkit-box-shadow: 2px 2px 2px #cccccc;
+	box-shadow: 2px 2px 2px #cccccc;
+	
+	}
+	
+	.field{margin-bottom:7px;}
+	
+	label {
+	font-family: Arial, Verdana; 
+	text-shadow: 2px 2px 2px #ccc;
+	display: block; 
+	float: left; 
+	font-weight: bold; 
+	margin-right:10px; 
+	text-align: right; 
+	width: 150px; 
+	line-height: 25px; 
+	font-size: 15px; 
+	}
+	
+	.input{
+	font-family: Arial, Verdana; 
+	font-size: 15px; 
+	padding: 5px; 
+	border: 1px solid #b9bdc1; 
+	width: 300px; 
+	color: #797979;	
+	}
+	
+	.input:focus{
+	background-color:#E7E8E7;	
+	}
+	
+	.textarea {
+	height:150px;	
+	}
+	
+	.hint{
+	display:none;
+	}
+	
+	.field:hover .hint {  
+	position: absolute;
+	display: block;  
+	margin: -30px 0 0 455px;
+	color: #FFFFFF;
+	padding: 7px 10px;
+	background: rgba(0, 0, 0, 0.6);
+	
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border-radius: 7px;	
+	}
+	
+	.button{
+	float: right;
+	margin:10px 55px 10px 0;
+	font-weight: bold;
+	line-height: 1;
+	padding: 6px 10px;
+	cursor:pointer;   
+	color: #fff;
+	
+	text-align: center;
+	text-shadow: 0 -1px 1px #64799e;
+	
+	/* Background gradient */
+	background: #a5b8da;
+	background: -moz-linear-gradient(top, #a5b8da 0%, #7089b3 100%);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a5b8da), to(#7089b3));
+	
+	/* Border style */
+  	border: 1px solid #5c6f91;  
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+  
+	/* Box shadow */
+	-moz-box-shadow: inset 0 1px 0 0 #aec3e5;
+	-webkit-box-shadow: inset 0 1px 0 0 #aec3e5;
+	box-shadow: inset 0 1px 0 0 #aec3e5;
+	
+	}
+	
+	.button:hover {
+	background: #848FB2;
+    cursor: pointer;
+	}
+	
+	.GridGeral { width: 95%; border-spacing: 0; font-family: Tahoma, Verdana, Arial, Helvetica; font-size: 13px; }
+	.GridGeral thead { background-color: #401972; font-weight: bold; color: #FFFFFF; text-align:center;}
+	.GridGeral tbody tr:hover { cursor: pointer; background-color: #401972 !important; color: White; }
+	.GridGeral tbody tr:hover td { color: White !important; }
+	.GridGeral td { text-align:left; padding: 0.4em 0.3em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #000000; }
+	.GridGeral th { border-left: 1px solid #ddd; border-right: 1px solid #888; padding: 0.3em 0 0.3em 0.3em 0.3em; }
+	.GridGeral td.Forte { text-align:left; font-weight: bold; color: #401972; }
+	.GridGeral td.ForteD { text-align:right; font-weight: bold; color: #401972; }
+	.GridGeral td.ForteC { text-align:center; font-weight: bold; color: #401972; }
+	.GridGeral td.Valor { text-align:right; font-weight: bold; color: #990000; }
+	.GridGeral td.ForteP { text-align:left; font-weight: bold; color: #401972; font-size: 11px;}
+	.GridGeral tr:nth-child(even) { background-color: #DAA2FF; }
+    -->
+		</style>
 	</head>
 	<body ng-controller="MainStack as ctrl">
-		<h1>Disparar Servidor</h1>
-		<form name="frmServer">
-			<input type="hidden"
-				name="token"
-				required
-				ng-model="ctrl.token"
-				ng-minlength="4" />
-			<br />NomeServidor:
-			<input type="text"
-				name="NomeServidor"
-				required
-				ng-model="ctrl.server.NomeServidor"
-                ng-minlength="4" />
-			<br />Flavor:
-			<select name="cmbFalvor" required ng-model="ctrl.flavor"
-						ng-options="c.name for c in ctrl.ListaFlavors">
-				<option value="">-- Selecione --</option>
-			</select>
-			<br />Image:
-			<select name="cmbImage" required ng-model="ctrl.image"
-						ng-options="c.name for c in ctrl.ListaImages">
-				<option value="">-- Selecione --</option>
-			</select>
-			<br /><br />
-			<input type="submit"
-				value="Criar Servidor"
-				ng-disabled="frmServer.$invalid" />
+		<form id="frmServer" name="frmServer" class="rounded" ng-submit="ctrl.createserver()">
+			<div style="float: left; height: 100%; text-align: center;">
+				<img src="img/logo.png" width="90px"  />
+				<br /><br /><br />
+				<img src="img/openstack-logo-full.png" />
+			</div>
+			<div style="float: left; min-height: 200px; min-width: 30px;">
+				&nbsp;
+			</div>
+			<div>
+				<h3>Criar Novo Server</h3>
+				<input type="hidden"
+					name="token"
+					required
+					ng-model="ctrl.token"
+					ng-minlength="4" />
+				<div class="field">
+					<label for="name">Nome Servidor:</label>
+					<input type="text"
+						name="NomeServidor"
+						required
+						ng-model="ctrl.NomeServidor"
+						ng-minlength="4" />
+					<p class="hint">Informe o nome do servidor.</p>
+				</div>
+				<div class="field">
+					<label for="name">Tipo Servidor:</label>
+					<select name="cmbFalvor" required ng-model="ctrl.flavor"
+								ng-options="c.name for c in ctrl.ListaFlavors">
+						<option value="">-- Selecione --</option>
+					</select>
+					<p class="hint">Informe as caracteristicas de hardware do servidor.</p>
+				</div>
+				<div class="field">
+					<label for="name">Sistema&nbsp;Operacional:</label>
+					<select name="cmbImage" required ng-model="ctrl.image"
+								ng-options="c.name for c in ctrl.ListaImages">
+						<option value="">-- Selecione --</option>
+					</select>
+					<p class="hint">Informe o sistema operacional utilizado no servidor.</p>
+				</div>
+				<div class="field">
+					<label for="name">Rede:</label>
+					<select name="cmbNetwork" required ng-model="ctrl.network"
+								ng-options="c.name for c in ctrl.ListaNetworks" style="width: 240px">
+						<option value="">-- Selecione --</option>
+					</select>
+					<p class="hint">Informe a rede na qual o servidor vai ser instalado.</p>
+				</div>
+				<br /><br />
+				<input type="submit" class="button"
+					value="Criar Servidor"
+					ng-disabled="frmServer.$invalid" />
+			</div>
+			<div style="width: 100%">
+				<table class="GridGeral">
+					<thead>
+						<tr><th>Lista de Servidores</th></tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in ctrl.ListaServers">
+							<td class="Forte" ng-bind="item.name"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="loading" ng-show="loading">Carregando .....</div>
 		</form>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
